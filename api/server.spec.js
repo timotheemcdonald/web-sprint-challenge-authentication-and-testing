@@ -31,13 +31,30 @@ describe("server", () => {
         })
 
     
-        // describe('/login', () => {
-        //     beforeEach(async () => {
-        //         await db('users').truncate()
-        //     })
+        describe('/login', () => {
+            beforeEach(async () => {
+                await db('users').truncate()
+            })
 
+            it('should return 201 when user logs in', () => {
+                return supertest(server)
+                .post('/api/auth/register')
+                .send({ username:'Ariadne', password: 'opera'})
+                .then(res => {
+                    expect(res.status).toBe(201);
+                })
+            })
 
-        // })
+            it('should fail if no password entered on login', () => {
+                return supertest(server)
+                .post('/api/auth/register')
+                .send({})
+                .then(res => {
+                    expect(res.status).toBe(400)
+                })
+            })
+
+        })
 
 
 })
